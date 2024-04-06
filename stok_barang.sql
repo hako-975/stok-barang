@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Mar 2024 pada 22.27
+-- Waktu pembuatan: 06 Apr 2024 pada 04.22
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -31,8 +31,15 @@ CREATE TABLE `barang` (
   `id_barang` int(11) NOT NULL,
   `nama_barang` varchar(50) NOT NULL,
   `deskripsi` text NOT NULL,
-  `stok` int(11) NOT NULL
+  `total_stok` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `barang`
+--
+
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `deskripsi`, `total_stok`) VALUES
+(4, 'Night Cream', '20 gr', 79);
 
 -- --------------------------------------------------------
 
@@ -43,9 +50,17 @@ CREATE TABLE `barang` (
 CREATE TABLE `barang_keluar` (
   `id_barang_keluar` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
-  `penerima` varchar(25) NOT NULL
+  `tanggal_keluar` timestamp NOT NULL DEFAULT current_timestamp(),
+  `penerima` varchar(50) NOT NULL,
+  `stok_keluar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `barang_keluar`
+--
+
+INSERT INTO `barang_keluar` (`id_barang_keluar`, `id_barang`, `tanggal_keluar`, `penerima`, `stok_keluar`) VALUES
+(3, 4, '2024-04-06 01:56:45', 'asd', 4);
 
 -- --------------------------------------------------------
 
@@ -56,9 +71,18 @@ CREATE TABLE `barang_keluar` (
 CREATE TABLE `barang_masuk` (
   `id_barang_masuk` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp(),
-  `keterangan` varchar(25) NOT NULL
+  `tanggal_masuk` timestamp NOT NULL DEFAULT current_timestamp(),
+  `keterangan` varchar(50) NOT NULL,
+  `stok_masuk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `barang_masuk`
+--
+
+INSERT INTO `barang_masuk` (`id_barang_masuk`, `id_barang`, `tanggal_masuk`, `keterangan`, `stok_masuk`) VALUES
+(2, 4, '2024-04-06 01:54:03', 'baru', 4),
+(5, 4, '2024-04-09 02:19:40', 'asd', 69);
 
 -- --------------------------------------------------------
 
@@ -77,7 +101,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `email`, `password`) VALUES
-(1091, 'firda@gmail.com', '$2y$10$ZAMgd5vkyn430FcmWjffPu/lrOsFJff4iAPHeqX884t/sDqimWFWO');
+(1091, 'firda@gmail.com', '$2y$10$yj1zxmx7qbHOaX2OIjwHl.rLPgAFLJwopwMpVgxCc/byqOhbj4S/e');
 
 --
 -- Indexes for dumped tables
@@ -117,25 +141,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
-  MODIFY `id_barang_keluar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barang_keluar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
-  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barang_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1092;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1093;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
