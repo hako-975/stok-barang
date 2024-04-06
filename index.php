@@ -1,6 +1,7 @@
 <?php
 require_once 'function.php';
-require_once 'cek.php';
+checkLogin();
+$dataUserLogin = dataUserLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +45,5 @@ require_once 'cek.php';
 <?php include_once 'footer.php'; ?>
 </div>
 </div>
-<?php include_once 'script.php'; ?>
 </body>
 </html>
