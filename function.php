@@ -59,6 +59,68 @@
 		unset($_SESSION["alert"]);
 	}
 
+	// [--- User ---]
+	function ubahUserPassword($data) {
+		global $conn;
+		$dataUserLogin = dataUserLogin();
+		$id_user = dataUserLogin()['id_user'];
+		$password_lama = htmlspecialchars($data['password_lama']);
+		if (!password_verify($password_lama, $dataUserLogin['password'])) {
+			setAlert("Gagal", "Password Lama tidak sesuai", "error");
+			header("Location: ubah_password.php");
+			exit;
+		}
+
+		$verifikasi_password_baru = htmlspecialchars($data['verifikasi_password_baru']);
+		$password_baru = htmlspecialchars($data['password_baru']);
+		
+		if ($password_baru != $verifikasi_password_baru) {
+			setAlert("Gagal", "Password Baru tidak sesuai dengan Verifikasi Password Baru", "error");
+			header("Location: ubah_password.php");
+			exit;
+		}
+
+		$password_hash = password_hash($password_baru, PASSWORD_DEFAULT);
+		$query = mysqli_query($conn, "UPDATE user SET password = '$password_hash' WHERE id_user = '$id_user'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function tambahUser($data)
+	{
+		global $conn;
+		$email = htmlspecialchars($data['email']);
+		$cek_email = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
+
+		if (mysqli_num_rows($cek_email) > 0) {
+	      	setAlert("Gagal", "Email sudah digunakan", "error");
+			header("Location: user.php");
+			exit;
+		}
+
+		$password = htmlspecialchars($data['password']);
+		$password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+		$query = mysqli_query($conn, "INSERT INTO user VALUES ('', '$email', '$password_hash')");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function ubahUser($data)
+	{
+		global $conn;
+		$id_user = htmlspecialchars($data['id_user']);
+		$email = htmlspecialchars($data['email']);
+		$query = mysqli_query($conn, "UPDATE user SET email = '$email' WHERE id_user = '$id_user'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function hapusUser($id_user)
+	{
+		global $conn;
+		$query = mysqli_query($conn, "DELETE FROM user WHERE id_user = '$id_user'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+
 	// [--- Barang ---]
 	function tambahBarang($data)
 	{
