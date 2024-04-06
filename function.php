@@ -150,6 +150,17 @@
 	  	return mysqli_affected_rows($conn);
 	}
 
+	function masukStokBarang($id_barang, $jumlah_tambah)
+	{
+		global $conn;
+		mysqli_query($conn, "UPDATE barang SET total_stok = total_stok + $jumlah_tambah WHERE id_barang = '$id_barang'");
+	}
+
+	function keluarStokBarang($id_barang, $jumlah_kurang)
+	{
+		global $conn;
+		mysqli_query($conn, "UPDATE barang SET total_stok = total_stok - $jumlah_kurang WHERE id_barang = '$id_barang'");
+	}
 
 	// [--- Barang Masuk ---]
 	function tambahBarangMasuk($data)
@@ -159,6 +170,7 @@
 		$tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
 		$keterangan = htmlspecialchars($data['keterangan']);
 		$stok_masuk = htmlspecialchars($data['stok_masuk']);
+		masukStokBarang($id_barang, $stok_masuk);
 		$query = mysqli_query($conn, "INSERT INTO barang_masuk VALUES ('', '$id_barang', '$tanggal_masuk', '$keterangan', '$stok_masuk')");
 	  	return mysqli_affected_rows($conn);
 	}
@@ -167,10 +179,16 @@
 	{
 		global $conn;
 		$id_barang_masuk = htmlspecialchars($data['id_barang_masuk']);
+		
+		$stok_masuk_lama = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM barang_masuk WHERE id_barang_masuk = '$id_barang_masuk'"))['stok_masuk'];
+
 		$id_barang = htmlspecialchars($data['id_barang']);
 		$tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
 		$keterangan = htmlspecialchars($data['keterangan']);
 		$stok_masuk = htmlspecialchars($data['stok_masuk']);
+
+		keluarStokBarang($id_barang, $stok_masuk_lama); // keluarkan stok lama terlebih dahulu
+		masukStokBarang($id_barang, $stok_masuk);
 
 		$query = mysqli_query($conn, "UPDATE barang_masuk SET id_barang = '$id_barang', tanggal_masuk = '$tanggal_masuk', keterangan = '$keterangan', stok_masuk = '$stok_masuk' WHERE id_barang_masuk = '$id_barang_masuk'");
 	  	return mysqli_affected_rows($conn);
@@ -179,6 +197,10 @@
 	function hapusBarangMasuk($id_barang_masuk)
 	{
 		global $conn;
+		$data_barang_masuk = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM barang_masuk WHERE id_barang_masuk = '$id_barang_masuk'"));
+		$stok_masuk_lama = $data_barang_masuk['stok_masuk'];
+		$id_barang = $data_barang_masuk['id_barang'];
+		keluarStokBarang($id_barang, $stok_masuk_lama); // keluarkan stok lama terlebih dahulu
 		$query = mysqli_query($conn, "DELETE FROM barang_masuk WHERE id_barang_masuk = '$id_barang_masuk'");
 	  	return mysqli_affected_rows($conn);
 	}
@@ -191,6 +213,7 @@
 		$tanggal_keluar = htmlspecialchars($data['tanggal_keluar']);
 		$penerima = htmlspecialchars($data['penerima']);
 		$stok_keluar = htmlspecialchars($data['stok_keluar']);
+		keluarStokBarang($id_barang, $stok_keluar);
 		$query = mysqli_query($conn, "INSERT INTO barang_keluar VALUES ('', '$id_barang', '$tanggal_keluar', '$penerima', '$stok_keluar')");
 	  	return mysqli_affected_rows($conn);
 	}
@@ -199,11 +222,16 @@
 	{
 		global $conn;
 		$id_barang_keluar = htmlspecialchars($data['id_barang_keluar']);
+		$stok_keluar_lama = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM barang_keluar WHERE id_barang_keluar = '$id_barang_keluar'"))['stok_keluar'];
+
 		$id_barang = htmlspecialchars($data['id_barang']);
 		$tanggal_keluar = htmlspecialchars($data['tanggal_keluar']);
 		$penerima = htmlspecialchars($data['penerima']);
 		$stok_keluar = htmlspecialchars($data['stok_keluar']);
-
+		
+		masukStokBarang($id_barang, $stok_keluar_lama); // masukkan stok lama terlebih dahulu
+		keluarStokBarang($id_barang, $stok_keluar); 
+		
 		$query = mysqli_query($conn, "UPDATE barang_keluar SET id_barang = '$id_barang', tanggal_keluar = '$tanggal_keluar', penerima = '$penerima', stok_keluar = '$stok_keluar' WHERE id_barang_keluar = '$id_barang_keluar'");
 	  	return mysqli_affected_rows($conn);
 	}
@@ -211,6 +239,10 @@
 	function hapusBarangKeluar($id_barang_keluar)
 	{
 		global $conn;
+		$data_barang_keluar = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM barang_keluar WHERE id_barang_keluar = '$id_barang_keluar'"));
+		$stok_keluar_lama = $data_barang_keluar['stok_keluar'];
+		$id_barang = $data_barang_keluar['id_barang'];
+		masukStokBarang($id_barang, $stok_keluar_lama); // masukkan stok lama terlebih dahulu
 		$query = mysqli_query($conn, "DELETE FROM barang_keluar WHERE id_barang_keluar = '$id_barang_keluar'");
 	  	return mysqli_affected_rows($conn);
 	}
