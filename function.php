@@ -1,4 +1,5 @@
 <?php
+	date_default_timezone_set("Asia/Jakarta");
 	session_start();
 	$conn = mysqli_connect("localhost", "root", "", "stok_barang");
  	
@@ -58,6 +59,7 @@
 		unset($_SESSION["alert"]);
 	}
 
+	// [--- Barang ---]
 	function tambahBarang($data)
 	{
 		global $conn;
@@ -86,4 +88,68 @@
 	  	return mysqli_affected_rows($conn);
 	}
 
+
+	// [--- Barang Masuk ---]
+	function tambahBarangMasuk($data)
+	{
+		global $conn;
+		$id_barang = htmlspecialchars($data['id_barang']);
+		$tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
+		$keterangan = htmlspecialchars($data['keterangan']);
+		$stok_masuk = htmlspecialchars($data['stok_masuk']);
+		$query = mysqli_query($conn, "INSERT INTO barang_masuk VALUES ('', '$id_barang', '$tanggal_masuk', '$keterangan', '$stok_masuk')");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function ubahBarangMasuk($data)
+	{
+		global $conn;
+		$id_barang_masuk = htmlspecialchars($data['id_barang_masuk']);
+		$id_barang = htmlspecialchars($data['id_barang']);
+		$tanggal_masuk = htmlspecialchars($data['tanggal_masuk']);
+		$keterangan = htmlspecialchars($data['keterangan']);
+		$stok_masuk = htmlspecialchars($data['stok_masuk']);
+
+		$query = mysqli_query($conn, "UPDATE barang_masuk SET id_barang = '$id_barang', tanggal_masuk = '$tanggal_masuk', keterangan = '$keterangan', stok_masuk = '$stok_masuk' WHERE id_barang_masuk = '$id_barang_masuk'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function hapusBarangMasuk($id_barang_masuk)
+	{
+		global $conn;
+		$query = mysqli_query($conn, "DELETE FROM barang_masuk WHERE id_barang_masuk = '$id_barang_masuk'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	// [--- Barang Keluar ---]
+	function tambahBarangKeluar($data)
+	{
+		global $conn;
+		$id_barang = htmlspecialchars($data['id_barang']);
+		$tanggal_keluar = htmlspecialchars($data['tanggal_keluar']);
+		$penerima = htmlspecialchars($data['penerima']);
+		$stok_keluar = htmlspecialchars($data['stok_keluar']);
+		$query = mysqli_query($conn, "INSERT INTO barang_keluar VALUES ('', '$id_barang', '$tanggal_keluar', '$penerima', '$stok_keluar')");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function ubahBarangKeluar($data)
+	{
+		global $conn;
+		$id_barang_keluar = htmlspecialchars($data['id_barang_keluar']);
+		$id_barang = htmlspecialchars($data['id_barang']);
+		$tanggal_keluar = htmlspecialchars($data['tanggal_keluar']);
+		$penerima = htmlspecialchars($data['penerima']);
+		$stok_keluar = htmlspecialchars($data['stok_keluar']);
+
+		$query = mysqli_query($conn, "UPDATE barang_keluar SET id_barang = '$id_barang', tanggal_keluar = '$tanggal_keluar', penerima = '$penerima', stok_keluar = '$stok_keluar' WHERE id_barang_keluar = '$id_barang_keluar'");
+	  	return mysqli_affected_rows($conn);
+	}
+
+	function hapusBarangKeluar($id_barang_keluar)
+	{
+		global $conn;
+		$query = mysqli_query($conn, "DELETE FROM barang_keluar WHERE id_barang_keluar = '$id_barang_keluar'");
+	  	return mysqli_affected_rows($conn);
+	}
 ?>

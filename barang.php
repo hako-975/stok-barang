@@ -19,7 +19,7 @@ if (isset($_POST['btnTambahBarang'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dashboard</title>
+    <title>Barang</title>
     <?php include_once 'head.php'; ?>
 </head>
 <body class="sb-nav-fixed">
@@ -48,12 +48,12 @@ if (isset($_POST['btnTambahBarang'])) {
                 </div>
                 <div class="mb-3">
                   <label for="total_stok" class="form-label">Total Stok</label>
-                  <input type="number" class="form-control" id="total_stok" name="total_stok" required>
+                  <input type="number" class="form-control" min="0" id="total_stok" name="total_stok" required>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-fw fa-times"></i> Tutup</button>
-                <button type="submit" class="btn btn-primary" name="btnUbahBarang"><i class="fas fa-fw fa-save"></i> Simpan</button>
+                <button type="submit" class="btn btn-primary" name="btnTambahBarang"><i class="fas fa-fw fa-save"></i> Simpan</button>
               </div>
             </div>
         </form>

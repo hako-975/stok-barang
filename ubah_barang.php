@@ -27,7 +27,7 @@ if (isset($_POST['btnUbahBarang'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dashboard</title>
+    <title>Ubah Barang - <?= $data_barang['nama_barang']; ?></title>
     <?php include_once 'head.php'; ?>
 </head>
 <body class="sb-nav-fixed">
@@ -50,21 +50,21 @@ if (isset($_POST['btnUbahBarang'])) {
 
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="ubahBarangModalLabel<?= $data_barang['id_barang']; ?>">Ubah Barang - <?= $data_barang['nama_barang']; ?></h1>
+                            <h1 class="modal-title fs-5" id="ubahBarangModalLabel">Ubah Barang - <?= $data_barang['nama_barang']; ?></h1>
                             <a href="barang.php" class="btn-close"></a>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="nama_barang<?= $data_barang['id_barang']; ?>" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" id="nama_barang<?= $data_barang['id_barang']; ?>" name="nama_barang" value="<?= $data_barang['nama_barang']; ?>" required>
+                                <label for="nama_barang" class="form-label">Nama Barang</label>
+                                <input type="text" class="form-control" id="nama_barang" name="nama_barang" value="<?= $data_barang['nama_barang']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="deskripsi<?= $data_barang['id_barang']; ?>" class="form-label">Deskripsi</label>
-                                <textarea class="form-control" id="deskripsi<?= $data_barang['id_barang']; ?>" name="deskripsi" required><?= $data_barang['deskripsi']; ?></textarea>
+                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                <textarea class="form-control" id="deskripsi" name="deskripsi" required><?= $data_barang['deskripsi']; ?></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="total_stok<?= $data_barang['id_barang']; ?>" class="form-label">Total Stok</label>
-                                <input type="number" class="form-control" id="total_stok<?= $data_barang['id_barang']; ?>" name="total_stok" value="<?= $data_barang['total_stok']; ?>" required>
+                                <label for="total_stok" class="form-label">Total Stok</label>
+                                <input type="number" class="form-control" id="total_stok" name="total_stok" min="0" value="<?= $data_barang['total_stok']; ?>" required>
                             </div>
                         </div>
                         <div class="modal-footer">
