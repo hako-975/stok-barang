@@ -86,7 +86,7 @@ if (isset($_POST['btnTambahBarangMasuk'])) {
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Barang</th>
+                                <th>Nama Brand</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Keterangan</th>
                                 <th>Stok Masuk</th>

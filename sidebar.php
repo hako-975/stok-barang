@@ -21,6 +21,16 @@
                     Barang Keluar
                 </a>
                 
+                <div class="sb-sidenav-menu-heading">Laporan</div>
+                <a class="nav-link" href="laporan_barang_masuk.php">
+                    <div class="sb-nav-link-icon"><i class="fas fas fa-sign-in-alt"></i></div>
+                    Laporan Barang Masuk
+                </a>
+                <a class="nav-link" href="laporan_barang_keluar.php">
+                    <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                    Laporan Barang Keluar
+                </a>
+
                 <div class="sb-sidenav-menu-heading">User</div>
                 
                 <a class="nav-link" href="user.php">
